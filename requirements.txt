@@ -1,0 +1,4 @@
+attrs==21.4.0
+etherscan-python==2.1.0
+rich==11.0.0
+textual==0.1.14
