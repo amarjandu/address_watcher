@@ -1,25 +1,21 @@
 import datetime
+from typing import Set, Dict
 
-from attrs import attr
+import attr
 
 
-@attr.s(frozen=True, auto_attribs=True, keyword_only=True)
+@attr.s(frozen=True, auto_attribs=True, kw_only=True)
 class Address:
-    hash: str
-    transactions: str
-    log_timestamp: datetime
+    address: str
+    transactions: Set[Dict[str, str]]
 
     @property
     def balance(self):
         return
 
     @classmethod
-    def from_ether_scan(cls, txn_by_address_response) -> 'Address':
+    def from_ether_scan(cls, address, txn_by_address_response) -> 'Address':
         # See example response:
         # https://github.com/pcko1/etherscan-python/blob/master/logs/standard/get_internal_txs_by_address.json
-        hash = txn_by_address_response['kwargs']['address']
-        transactions = txn_by_address_response['res']
-        log_timestamp = datetime.datetime(txn_by_address_response['log_timestamp'])
-        return Address(hash=hash,
-                       transactions=transactions,
-                       log_timestamp=log_timestamp)
+        return Address(address=address,
+                       transactions=txn_by_address_response)
